@@ -1,0 +1,114 @@
+[gd_scene load_steps=16 format=3 uid="uid://b6lojh83q1a42"]
+
+[ext_resource type="Script" uid="uid://dys7aa7lpt1l5" path="res://scripts/player/player_container.gd" id="1_w4bx7"]
+[ext_resource type="Script" uid="uid://csiqiqsk3ja0" path="res://scripts/player/player_statistics.gd" id="2_inmh1"]
+[ext_resource type="Script" uid="uid://dwqv65m8ieqgg" path="res://addons/finite_state_machine/scripts/state_machine.gd" id="2_ojsrn"]
+[ext_resource type="Script" uid="uid://3nkiqk18664k" path="res://scripts/player/position/position_resource.gd" id="3_5voea"]
+[ext_resource type="Script" uid="uid://dxp4qptkhv724" path="res://scripts/player/movement_states/ground_state.gd" id="4_gnpa2"]
+[ext_resource type="Script" uid="uid://bii8knnd511ch" path="res://scripts/player/movement_states/air_state.gd" id="5_gunnf"]
+[ext_resource type="Script" uid="uid://bv23inpmtc3pw" path="res://scripts/player/position/stood_state.gd" id="7_x3otm"]
+[ext_resource type="Script" uid="uid://2esl4ojb0bct" path="res://scripts/player/position/standing_state.gd" id="8_shxt8"]
+[ext_resource type="Script" uid="uid://dhcfykc71ybui" path="res://scripts/player/position/ducking_state.gd" id="9_86r7a"]
+[ext_resource type="Script" uid="uid://fdmqgwqbl0lm" path="res://scripts/player/position/ducked_state.gd" id="10_cpbd1"]
+
+[sub_resource type="Resource" id="Resource_gnpa2"]
+script = ExtResource("2_inmh1")
+forward_velocity = 100.0
+sideward_velocity = 10.0
+backward_velocity = 10.0
+ground_friction = 5.0
+stopping_velocity = 20.0
+jump_velocity = 1.0
+gravity_velocity = 9.8
+acceleration_ground = 50.0
+acceleration_air = 4.0
+max_velocity = 4096.0
+stood_max_velocity = 40.0
+ducked_max_velocity = 8.0
+can_jump_while_crouched = true
+step_size = 8.0
+max_slop_angle = 0.785398
+metadata/_custom_type_script = "uid://csiqiqsk3ja0"
+
+[sub_resource type="Resource" id="Resource_whxqo"]
+script = ExtResource("3_5voea")
+duck_time = 0.3
+stood_position = 0.475
+duck_position = 1.425
+metadata/_custom_type_script = "uid://3nkiqk18664k"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gunnf"]
+height = 0.95
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5voea"]
+height = 0.95
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_x3otm"]
+height = 0.95
+
+[node name="PlayerContainer" type="CharacterBody3D" node_paths=PackedStringArray("camera", "world_collision_upper", "world_collision_lower")]
+process_mode = 1
+collision_layer = 12
+collision_mask = 7
+script = ExtResource("1_w4bx7")
+camera = NodePath("Camera3D")
+world_collision_upper = NodePath("WorldCollisionUpperBody")
+world_collision_lower = NodePath("WorldCollisionLowerBody")
+statistics = SubResource("Resource_gnpa2")
+position_variables = SubResource("Resource_whxqo")
+metadata/_custom_type_script = "uid://dys7aa7lpt1l5"
+
+[node name="WorldCollisionUpperBody" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.425, 0)
+shape = SubResource("CylinderShape3D_gunnf")
+debug_color = Color(0.956507, 4.04298e-06, 0.537557, 0.42)
+
+[node name="WorldCollisionLowerBody" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475, 0)
+shape = SubResource("CylinderShape3D_5voea")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="WorldCollisionLowerBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+shape = SubResource("CylinderShape3D_x3otm")
+target_position = Vector3(0, 0.5, 0)
+margin = 0.05
+max_results = 1
+collide_with_areas = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+fov = 90.0
+
+[node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("2_ojsrn")
+current_state = NodePath("GroundMovementState")
+metadata/_custom_type_script = "uid://dwqv65m8ieqgg"
+
+[node name="GroundMovementState" type="Node" parent="MovementStateMachine"]
+script = ExtResource("4_gnpa2")
+metadata/_custom_type_script = "uid://dxp4qptkhv724"
+
+[node name="AirMovementState" type="Node" parent="MovementStateMachine"]
+script = ExtResource("5_gunnf")
+metadata/_custom_type_script = "uid://bii8knnd511ch"
+
+[node name="PositionStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("2_ojsrn")
+current_state = NodePath("StoodState")
+metadata/_custom_type_script = "uid://dwqv65m8ieqgg"
+
+[node name="StoodState" type="Node" parent="PositionStateMachine"]
+script = ExtResource("7_x3otm")
+metadata/_custom_type_script = "uid://bv23inpmtc3pw"
+
+[node name="StandingState" type="Node" parent="PositionStateMachine"]
+script = ExtResource("8_shxt8")
+metadata/_custom_type_script = "uid://2esl4ojb0bct"
+
+[node name="DuckingState" type="Node" parent="PositionStateMachine"]
+script = ExtResource("9_86r7a")
+metadata/_custom_type_script = "uid://dhcfykc71ybui"
+
+[node name="DuckedState" type="Node" parent="PositionStateMachine"]
+script = ExtResource("10_cpbd1")
+metadata/_custom_type_script = "uid://fdmqgwqbl0lm"

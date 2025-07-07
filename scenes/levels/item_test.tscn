@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://d0xrk2kxt06ci"]
+
+[ext_resource type="Script" uid="uid://bnm2yq3tyc3av" path="res://scripts/level/level_base.gd" id="1_ac4ga"]
+[ext_resource type="Script" uid="uid://be36jx5lls2l1" path="res://scripts/player/player_spawnpoint.gd" id="2_0ffu0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0ffu0"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_0napy"]
+sky_material = SubResource("ProceduralSkyMaterial_0ffu0")
+
+[sub_resource type="Environment" id="Environment_poyy6"]
+background_mode = 2
+sky = SubResource("Sky_0napy")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ac4ga"]
+frequency = 0.0357
+fractal_type = 2
+fractal_lacunarity = -2.31
+fractal_gain = 0.65
+fractal_weighted_strength = 0.4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ffu0"]
+noise = SubResource("FastNoiseLite_ac4ga")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0napy"]
+albedo_color = Color(0.361083, 0.0577501, 0.530275, 1)
+albedo_texture = SubResource("NoiseTexture2D_0ffu0")
+
+[node name="ItemTest" type="Node3D"]
+script = ExtResource("1_ac4ga")
+metadata/_custom_type_script = "uid://bnm2yq3tyc3av"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_poyy6")
+
+[node name="PlayerSpawnpoint" type="Marker3D" parent="."]
+script = ExtResource("2_0ffu0")
+metadata/_custom_type_script = "uid://be36jx5lls2l1"
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_0napy")
+use_collision = true
+collision_mask = 0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(51, 1, 51)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 21, 0)
+size = Vector3(1, 41, 51)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 21, 0)
+size = Vector3(1, 41, 51)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21, 25)
+size = Vector3(49, 41, 1)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21, -25)
+size = Vector3(49, 41, 1)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+size = Vector3(3, 1, 5)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3)
+size = Vector3(3, 2, 1)
