@@ -22,13 +22,7 @@ func _physics_process(_delta: float) -> void:
 	if player.is_on_ceiling() and variables.on_floor:
 		return
 
-	var delta : float = position_variables.get_crouch_delta()
-	lower_collision.position.y = move_toward(lower_collision.position.y, position_variables.stood_position, delta)
-
-	if variables.on_floor:
-		player.move_and_collide(Vector3(0, delta, 0))
-	else:
-		player.move_and_collide(Vector3(0, -delta, 0))
+	lower_collision.position.y = move_toward(lower_collision.position.y, position_variables.stood_position, position_variables.get_crouch_delta())
 
 	if lower_collision.position.y <= position_variables.stood_position:
 		get_state_machine().current_state = stood_state
