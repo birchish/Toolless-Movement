@@ -52,28 +52,34 @@ use_collision = true
 collision_mask = 0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-size = Vector3(51, 1, 51)
+size = Vector3(1001, 1, 1001)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 21, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -21, 0)
+visible = false
 size = Vector3(1, 41, 51)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 21, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -21, 0)
+visible = false
 size = Vector3(1, 41, 51)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21, 25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -21, 25)
+visible = false
 size = Vector3(49, 41, 1)
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21, -25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -21, -25)
+visible = false
 size = Vector3(49, 41, 1)
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -39, 0)
+visible = false
 size = Vector3(3, 1, 5)
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -39.5, -3)
+visible = false
 size = Vector3(3, 2, 1)

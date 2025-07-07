@@ -67,6 +67,8 @@ func _physics_process(_delta: float) -> void:
 
 	clamp_velocity()
 
+	Logger.info(str(velocity.length()))
+
 
 ## Perform a move-and-slide along the set velocity vector. If the body collides with another, it will slide along the other body rather than stop immediately. The method returns whether or not it collided with anything.
 func move_and_slide_own() -> bool:

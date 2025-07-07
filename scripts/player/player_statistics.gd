@@ -11,15 +11,16 @@ extends Resource
 @export var stopping_velocity			: float = 50.0		## The speed the player stops moving.
 @export var jump_velocity				: float = 20.0		## The velocity imparted on to the player when jumping.
 @export var gravity_velocity			: float = 9.8		## Gravity.
+@export var target_speed				: float = 10.0
 
 @export_subgroup("Acceleration")
 @export var acceleration_ground			: float = 5			## The acceleration of the player on ground.
 @export var acceleration_air			: float = 1			## The acceleration of the player in air.
 
 @export_subgroup("Caps")
-@export var max_velocity				: float = 4096		## The max velocity the player can go.
-@export var stood_max_velocity			: float = 16		## The max velocity the player can go while stood.
-@export var ducked_max_velocity			: float = 8		## The max velocity the player can go while ducked.
+@export var max_velocity				: float = 8192.0	## The max velocity the player can go.
+@export var stood_max_velocity			: float = 16.0		## The max velocity the player can go while stood.
+@export var ducked_max_velocity			: float = 8.0		## The max velocity the player can go while ducked.
 
 @export_group("Misc")
 @export var can_jump_while_crouched		: bool = true		## If the player is allowed to crouch while jumping.

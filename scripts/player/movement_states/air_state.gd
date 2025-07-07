@@ -4,6 +4,7 @@ extends MovementState
 
 @onready var ground_state : GroundMovementState = get_node(^"../GroundMovementState")
 
+
 func _enter_state() -> void:
 	pass
 
@@ -20,8 +21,14 @@ func move() -> void:
 	var sideward : Vector3 = Vector3.LEFT
 
 	# Rotates for movement.
-	forward = forward.rotated(Vector3.UP, player.camera.rotation.y).normalized()
-	sideward = sideward.rotated(Vector3.UP, player.camera.rotation.y).normalized()
+	forward = MathUntilites.normalize_vector(forward.rotated(Vector3.UP, player.camera.rotation.y))
+	forward.y = 0
+
+	sideward = MathUntilites.normalize_vector(sideward.rotated(Vector3.UP, player.camera.rotation.y))
+	sideward.y = 0
+
+	#forward = forward.rotated(Vector3.UP, player.camera.rotation.y).normalized()
+	#sideward = sideward.rotated(Vector3.UP, player.camera.rotation.y).normalized()
 
 	# Imparts gravity onto the player.
 	variables.velocity.y -= statistics.gravity_velocity / Engine.physics_ticks_per_second
@@ -35,8 +42,9 @@ func move() -> void:
 	# Zero out the verticle part of movement.
 	wish_velocity.y = 0
 
-	var wish_direction : Vector3 = wish_velocity.normalized()
-	var wish_speed : float = wish_direction.length()
+	var wish_direction : Vector3 = wish_velocity
+	var wish_speed : float = MathUntilites.normalize_vector_float(wish_direction)
+	wish_direction = MathUntilites.normalize_vector(wish_direction)
 
 	# Clamp to game defined max speed.
 	if (wish_speed != 0.0) and (wish_speed > variables.speed):
@@ -46,11 +54,13 @@ func move() -> void:
 	accelerate(wish_direction, wish_speed, statistics.acceleration_air)
 
 
+
 func accelerate(wish_direction : Vector3, wish_speed : float, acceleration : float) -> void:
 	# See how much the direction is changing.
 	var current_speed : float = variables.velocity.dot(wish_direction)
 
 	# Reduce wish_speed by the amount of veer from current_speed.
+
 	var add_speed : float = wish_speed - current_speed
 
 	if wish_speed > statistics.max_velocity:
@@ -65,8 +75,5 @@ func accelerate(wish_direction : Vector3, wish_speed : float, acceleration : flo
 	if acceleration_speed > add_speed:
 		acceleration_speed = add_speed
 
-
-	# TODO why is this the way it is? range(3)? Magic numbers!
-	for index : int in range(3): # TODO Desse - Make it 2... make it 4...
-		# Adjust velocity.
-		variables.velocity += acceleration_speed * wish_direction.normalized()
+	# Adjust velocity.
+	variables.velocity += acceleration_speed * wish_direction.normalized()

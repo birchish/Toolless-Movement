@@ -13,17 +13,18 @@
 
 [sub_resource type="Resource" id="Resource_gnpa2"]
 script = ExtResource("2_inmh1")
-forward_velocity = 100.0
-sideward_velocity = 10.0
+forward_velocity = 20.0
+sideward_velocity = 20.0
 backward_velocity = 10.0
 ground_friction = 5.0
-stopping_velocity = 20.0
+stopping_velocity = 10.0
 jump_velocity = 1.0
 gravity_velocity = 9.8
-acceleration_ground = 50.0
-acceleration_air = 4.0
-max_velocity = 4096.0
-stood_max_velocity = 40.0
+target_speed = 10.0
+acceleration_ground = 5.0
+acceleration_air = 1.0
+max_velocity = 8192.0
+stood_max_velocity = 16.0
 ducked_max_velocity = 8.0
 can_jump_while_crouched = true
 step_size = 8.0

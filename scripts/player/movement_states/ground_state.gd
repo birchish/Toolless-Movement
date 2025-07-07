@@ -30,8 +30,14 @@ func move() -> void:
 	var sideward : Vector3 = Vector3.LEFT
 
 	# Rotates for movement.
-	forward = forward.rotated(Vector3.UP, player.camera.rotation.y).normalized()
-	sideward = sideward.rotated(Vector3.UP, player.camera.rotation.y).normalized()
+	forward = MathUntilites.normalize_vector(forward.rotated(Vector3.UP, player.camera.rotation.y))
+	forward.y = 0
+
+	sideward = MathUntilites.normalize_vector(sideward.rotated(Vector3.UP, player.camera.rotation.y))
+	sideward.y = 0
+
+	#forward = forward.rotated(Vector3.UP, player.camera.rotation.y).normalized()
+	#sideward = sideward.rotated(Vector3.UP, player.camera.rotation.y).normalized()
 
 	# Imparts gravity onto the player.
 	variables.velocity.y -= statistics.gravity_velocity / Engine.physics_ticks_per_second
@@ -47,15 +53,18 @@ func move() -> void:
 
 	friction()
 
-	var wish_direction : Vector3 = wish_velocity.normalized()
-	var wish_speed : float = wish_direction.length()
+	var wish_direction : Vector3 = wish_velocity
+	# VectorNormalize in the original source code doesn't actually return the length of the normalized vector
+	# It returns the length of the vector before it was normalized
+
+	var wish_speed : float = MathUntilites.normalize_vector_float(wish_direction)
+	wish_direction = MathUntilites.normalize_vector(wish_direction)
 
 	# Clamp to game defined max speed.
 	if wish_speed != 0.0 and (wish_speed > variables.speed):
 		wish_velocity *= variables.speed / wish_speed
 		wish_speed = variables.speed
 
-	# HACK kind of a strange way to do this.
 	variables.velocity.y = 0
 	accelerate(wish_direction, wish_speed, statistics.acceleration_ground)
 	variables.velocity.y = 0
@@ -66,10 +75,10 @@ func friction() -> void:
 	var speed : float = variables.velocity.length()
 
 	# If too slow, return.
-	if speed <= 0: # TODO why not less <=?
+	if is_zero_approx(speed):
 		return
 
-	# TODO comment what this does. This should be move further down to where the value is actually set.
+	# Speed lost.
 	var drop_amount : float = 0
 
 	# Applys ground friction.
@@ -80,6 +89,7 @@ func friction() -> void:
 
 	drop_amount += control * friction_value / Engine.physics_ticks_per_second
 
+	# Speed after loss is calculated.
 	var new_speed : float = speed - drop_amount
 	if new_speed < 0:
 		new_speed = 0
@@ -106,10 +116,8 @@ func accelerate(wish_direction : Vector3, wish_speed : float, acceleration : flo
 	if acceleration_speed > add_speed:
 		acceleration_speed = add_speed
 
-	# TODO why is this the way it is? range(3)? Magic numbers!
-	for index : int in range(3): # TODO Desse - Make it 2... make it 4...
-		# Adjust velocity.
-		variables.velocity += acceleration_speed * wish_direction
+	# Adjust velocity.
+	variables.velocity += acceleration_speed * wish_direction
 
 
 func perform_jump() -> void:

@@ -20,11 +20,11 @@ func get_movement() -> void:
 	variables.want_jump = Input.is_action_pressed("move_jump")
 	variables.want_duck = Input.is_action_pressed("move_duck")
 
-	variables.sideward_movement += statistics.sideward_velocity * int(Input.get_action_strength("move_leftward") * 50)
-	variables.sideward_movement -= statistics.sideward_velocity * int(Input.get_action_strength("move_rightward") * 50)
+	variables.sideward_movement += statistics.sideward_velocity * int(Input.get_action_strength("move_leftward") * statistics.target_speed)
+	variables.sideward_movement -= statistics.sideward_velocity * int(Input.get_action_strength("move_rightward") * statistics.target_speed)
 
-	variables.forward_movement += statistics.forward_velocity * int(Input.get_action_strength("move_forward") * 50)
-	variables.forward_movement -= statistics.forward_velocity * int(Input.get_action_strength("move_backward") * 50)
+	variables.forward_movement += statistics.forward_velocity * int(Input.get_action_strength("move_forward") * statistics.target_speed)
+	variables.forward_movement -= statistics.forward_velocity * int(Input.get_action_strength("move_backward") * statistics.target_speed)
 
 	if Input.is_action_just_released("move_leftward") or Input.is_action_just_released("move_rightward"):
 		variables.sideward_movement = 0
