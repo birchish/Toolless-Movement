@@ -25,9 +25,6 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
-	# Sets the player into the player group.
-	get_tree().has_group(&"player")
-
 	# Sets up which input the [PlayerContainer] will use.
 	match input_type:
 		0:
