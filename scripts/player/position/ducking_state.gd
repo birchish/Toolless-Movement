@@ -26,10 +26,12 @@ func _physics_process(_delta: float) -> void:
 
 	lower_collision.position.y = move_toward(lower_collision.position.y, position_variables.duck_position, delta)
 
+	# Prevents lifting off from the ground while ducking. Also gives the height boost from crouch jumping.
 	if variables.on_floor:
 		player.move_and_collide(Vector3(0, -delta, 0))
 	else:
-		player.move_and_collide(Vector3(0, delta, 0))
+		# Halfed delta so the lift off from crouch jumping is more natural feeling.
+		player.move_and_collide(Vector3(0, delta / 2, 0))
 
 	if is_equal_approx(lower_collision.position.y, position_variables.duck_position):
 		get_state_machine().current_state = ducked_state
