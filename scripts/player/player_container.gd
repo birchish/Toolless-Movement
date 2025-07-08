@@ -55,9 +55,7 @@ func _physics_process(_delta: float) -> void:
 	variables.was_on_floor = variables.on_floor
 
 	velocity = variables.velocity
-
 	move_and_slide_own()
-
 	variables.velocity = velocity
 
 	if variables.on_floor:
@@ -67,8 +65,6 @@ func _physics_process(_delta: float) -> void:
 
 	clamp_velocity()
 
-	Logger.info(str(velocity.length()))
-
 
 ## Perform a move-and-slide along the set velocity vector. If the body collides with another, it will slide along the other body rather than stop immediately. The method returns whether or not it collided with anything.
 func move_and_slide_own() -> bool:
@@ -77,29 +73,33 @@ func move_and_slide_own() -> bool:
 	# Reset previously detected floor
 	variables.on_floor  = false
 
-	#check floor
-	var check_motion : Vector3 = velocity * (1/60.)				# TODO What is 1/60.0? Why is it here?
-	check_motion.y  -= statistics.gravity_velocity * (1/360.)	# TODO What is 1/360.0? Why is it here?
+
+	# Check floor
+	# TODO: What exactly is this doing?
+	# NOTE: It seems to affect the air-strafing speed of the player.
+	var check_motion : Vector3 = velocity / Engine.physics_ticks_per_second # velocity * (1/60.0) at 60 tickers per second.
+	check_motion.y  -= statistics.gravity_velocity / (Engine.physics_ticks_per_second * 6) # statistics.gravity_velocity * (1/360.0) at 60 tickers per second.
 
 	var test_collision : KinematicCollision3D = move_and_collide(check_motion, true)
 
 	if test_collision:
 		var test_normal : Vector3 = test_collision.get_normal()
 
-		# Checks if the angle of the slop that the player is on is too steep for them to jump.
+		# Checks if the angle of the slop that the player is too steep to be considered on the floor.
 		if test_normal.angle_to(up_direction) < statistics.max_slop_angle:
 			variables.on_floor = true
 
 	# Loop performing the move
 	var motion : Vector3 = velocity / Engine.physics_ticks_per_second
 
-	# TODO What does this do?
+	# TODO: What does this do?
 	for step : int in max_slides:
 		var collision : KinematicCollision3D = move_and_collide(motion)
 
 		if not collision:
 			# No collision, so move has finished
-			break
+			break # TESTING: Why not continue instead?
+			# NOTE: This makes the player much faster.
 
 		# Calculate velocity to slide along the surface
 		var normal : Vector3 = collision.get_normal()

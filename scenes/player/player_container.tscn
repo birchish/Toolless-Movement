@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://csiqiqsk3ja0" path="res://scripts/player/player_statistics.gd" id="2_inmh1"]
 [ext_resource type="Script" uid="uid://dwqv65m8ieqgg" path="res://addons/finite_state_machine/scripts/state_machine.gd" id="2_ojsrn"]
 [ext_resource type="Script" uid="uid://3nkiqk18664k" path="res://scripts/player/position/position_resource.gd" id="3_5voea"]
-[ext_resource type="Script" uid="uid://dxp4qptkhv724" path="res://scripts/player/movement_states/ground_state.gd" id="4_gnpa2"]
-[ext_resource type="Script" uid="uid://bii8knnd511ch" path="res://scripts/player/movement_states/air_state.gd" id="5_gunnf"]
+[ext_resource type="Script" uid="uid://dxp4qptkhv724" path="res://scripts/player/movement-states/ground_state.gd" id="4_gnpa2"]
+[ext_resource type="Script" uid="uid://bii8knnd511ch" path="res://scripts/player/movement-states/air_state.gd" id="5_gunnf"]
 [ext_resource type="Script" uid="uid://bv23inpmtc3pw" path="res://scripts/player/position/stood_state.gd" id="7_x3otm"]
 [ext_resource type="Script" uid="uid://2esl4ojb0bct" path="res://scripts/player/position/standing_state.gd" id="8_shxt8"]
 [ext_resource type="Script" uid="uid://dhcfykc71ybui" path="res://scripts/player/position/ducking_state.gd" id="9_86r7a"]
@@ -22,10 +22,10 @@ jump_velocity = 1.0
 gravity_velocity = 9.8
 target_speed = 10.0
 acceleration_ground = 5.0
-acceleration_air = 1.0
+acceleration_air = 2.0
 max_velocity = 8192.0
 stood_max_velocity = 16.0
-ducked_max_velocity = 8.0
+ducked_max_velocity = 4.0
 can_jump_while_crouched = true
 step_size = 8.0
 max_slop_angle = 0.785398
@@ -49,6 +49,9 @@ height = 0.95
 
 [node name="PlayerContainer" type="CharacterBody3D" node_paths=PackedStringArray("camera", "world_collision_upper", "world_collision_lower")]
 process_mode = 1
+process_thread_group = 1
+process_thread_group_order = 0
+process_thread_messages = 0
 collision_layer = 12
 collision_mask = 7
 script = ExtResource("1_w4bx7")

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://d33jd2e0t5nwe"]
+
+[ext_resource type="Script" uid="uid://fr5fbw7mtu3k" path="res://autoloads/player-manager/player_manager.gd" id="1_kuglk"]
+
+[node name="PlayerManager" type="Node"]
+script = ExtResource("1_kuglk")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
