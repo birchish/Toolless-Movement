@@ -2,9 +2,22 @@ class_name LocalInputSystem
 extends InputSystem
 
 
-@export_group("Input")
-@export var mouse_sensitivity : float = 2.0
-@export var gamepad_sensitivity : float = 10.0
+var mouse_sensitivity : float
+var gamepad_sensitivity : float
+
+
+func _ready() -> void:
+	var game_settings : GameSettings = GameSettings.new()
+
+	var error : Error = game_settings.open_file()
+	if error == OK:
+		Logger.info("Yes config")
+		mouse_sensitivity = (game_settings.get_setting("mouse", "look_sensitivity", 2.0) as float)
+		gamepad_sensitivity = (game_settings.get_setting("gamepad", "look_sensitivity", 2.0) as float)
+	else:
+		Logger.warn(error_string(error))
+		mouse_sensitivity = 2.0
+		gamepad_sensitivity = 10.0
 
 
 func _input(event: InputEvent) -> void:
