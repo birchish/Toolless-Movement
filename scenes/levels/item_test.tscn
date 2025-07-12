@@ -33,10 +33,10 @@ albedo_texture = SubResource("NoiseTexture2D_0ffu0")
 [sub_resource type="Curve3D" id="Curve3D_0ffu0"]
 bake_interval = 512.0
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.347149, -0.342773, 5.26201, 0, 0, 0, 0, 0, 0, 0.634995, 0.356152, 11.1658, 0, 0, 0, 0, 0, 0, 0.528831, 0.456669, 20.2367, 0, 0, 0, 0, 0, 0, -1.68428, 1.53657, 27.2175, 0, 0, 0, 0, 0, 0, -5.38116, 3.1431, 35.5769, 0, 0, 0, 0, 0, 0, -11.2164, 7.10137, 47.7301, 0, 0, 0, 0, 0, 0, -17.366, 13.6253, 58.4156),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.347149, -0.342773, 5.26201, 0, 0, 0, 0, 0, 0, 0.512338, 0.0583256, 8.03538, 0, 0, 0, 0, 0, 0, 0.634995, 0.356152, 10.0947, 0, 0, 0, 0, 0, 0, 0.528831, 0.456669, 20.2367, 0, 0, 0, 0, 0, 0, -1.68428, 1.53657, 27.2175, 0, 0, 0, 0, 0, 0, -5.38116, 3.1431, 35.5769, 0, 0, 0, 0, 0, 0, -11.2164, 7.10137, 47.7301, 0, 0, 0, 0, 0, 0, -17.366, 13.6253, 58.4156, 0, 0, 0, 0, 0, 0, -19.8668, 16.4228, 69.348, 0, 0, 0, 0, 0, 0, -28.764, 23.1756, 101.735, 0, 0, 0, 0, 0, 0, -33.9239, 30.6603, 127.775, 0, 0, 0, 0, 0, 0, -30.3199, 43.8153, 146.973, 0, 0, 0, 0, 0, 0, -35.248, 64.1981, 198.759, 0, 0, 0, 0, 0, 0, -26.392, 84.2724, 221.018, 0, 0, 0, 0, 0, 0, -31.9541, 95.377, 255.263),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
-point_count = 8
+point_count = 16
 
 [node name="ItemTest" type="Node3D"]
 script = ExtResource("1_ac4ga")
@@ -50,7 +50,7 @@ shadow_enabled = true
 environment = SubResource("Environment_poyy6")
 
 [node name="PlayerSpawnpoint" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 19, 57)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 494, 118, -29)
 script = ExtResource("2_0ffu0")
 metadata/_custom_type_script = "uid://be36jx5lls2l1"
 
@@ -64,11 +64,11 @@ collision_mask = 0
 size = Vector3(1001, 1, 1001)
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -28)
 size = Vector3(3, 1, 5)
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -31)
 size = Vector3(3, 2, 1)
 
 [node name="CSGCombiner3D2" type="CSGCombiner3D" parent="."]
@@ -76,8 +76,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-polygon = PackedVector2Array(-2, 0, 0, 3, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+polygon = PackedVector2Array(-6, -4, 0, 3, 5, -4)
 mode = 2
 path_node = NodePath("../../Path3D")
 path_interval_type = 1
@@ -91,4 +91,10 @@ path_u_distance = 1.0
 path_joined = false
 
 [node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 curve = SubResource("Curve3D_0ffu0")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 17, -17)
+use_collision = true
+size = Vector3(1000, 50, 1)

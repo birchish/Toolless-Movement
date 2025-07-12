@@ -76,7 +76,7 @@ func set_current_state(value: StateMachineState) -> void:
 	if is_instance_valid(debug_draw):
 		debug_draw.queue_redraw()
 
-	Logger.info(str(current_state))
+	#Logger.info(str(current_state))
 
 
 # Getter function for 'current_state'.

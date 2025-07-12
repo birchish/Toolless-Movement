@@ -13,9 +13,9 @@
 
 [sub_resource type="Resource" id="Resource_gnpa2"]
 script = ExtResource("2_inmh1")
-forward_velocity = 20.0
-sideward_velocity = 20.0
-backward_velocity = 10.0
+forward_velocity = 10.0
+sideward_velocity = 5.0
+backward_velocity = 5.0
 ground_friction = 5.0
 stopping_velocity = 10.0
 jump_velocity = 1.0

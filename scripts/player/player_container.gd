@@ -98,6 +98,7 @@ func move_and_slide_own() -> bool:
 
 		if not collision:
 			# No collision, so move has finished
+			#continue
 			break # TESTING: Why not continue instead?
 			# NOTE: This makes the player much faster.
 

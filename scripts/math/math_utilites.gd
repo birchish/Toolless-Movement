@@ -2,13 +2,13 @@ class_name MathUntilites
 extends Object
 
 
+# Similar to a a Valve vector nomralize
+# https://github.com/ValveSoftware/source-sdk-2013/blob/39f6dde8fbc238727c020d13b05ecadd31bda4c0/src/public/mathlib/vector.h#L2255C1-L2255C47
 static func normalize_vector(vector : Vector3) -> Vector3:
 	var square_length : float = sqrt(vector.length_squared())
-	var inverse_length : float
 
 	if square_length:
-		inverse_length = 1 / square_length
-		vector *= inverse_length
+		vector /= square_length
 
 	#return [vector, square_length * inverse_length]
 	return vector

@@ -19,4 +19,5 @@ func _lost_focus() -> void:
 
 
 func _gain_focus() -> void:
+	Engine.max_fps = 0
 	pass
