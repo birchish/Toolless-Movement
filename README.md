@@ -5,3 +5,7 @@ This project is based on [GodotSourceEngineMovemen](https://github.com/atlrvrse/
 ## Goal
 
 The goal is to replicate Source game movement, such as strafing, bunny hopping, and trimping.
+
+## Notes
+
+This repository requires a modified version of Godot 4.4.1. that includes a function to normalize a vector and return the magnitude of it. It is currently not possible to build it otherwise.
